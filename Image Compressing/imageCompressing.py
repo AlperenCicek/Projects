@@ -1,3 +1,4 @@
+import cv2
 import numpy as np
 from random import seed
 from random import randint
@@ -152,6 +153,8 @@ class ImageCompressing:
             print("********")
             head = head.next
 
+
+
 class Node:
     def __init__(self, data = None, weight = None):
         self.data = data
@@ -165,9 +168,26 @@ class Node:
 
 numbers1 = np.array(([1, 3, 4, 2, 5], [1, 4, 3, 2, 3], [2, 2, 1, 4, 2], [3, 1, 3, 4, 5], [5, 5, 1, 3, 4]), dtype= int)
 numbers2 = np.array(([1,5,4,3,2], [1, 2, 1, 4, 1], [1, 2, 5, 3, 4]))
-numbers3 = np.array(([[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4,4,4],[5,5,5,5,5,5,5,5],[6,6,6,6]]))
+
 image = np.ones((10,10))
 for i in range(10):
     image[i][i] = randint(1, 5)
-words = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbkkkkkkkkkkkkkkkkkkkkmmmmmmmmmmddddddddgggg"
-sample = ImageCompressing(numbers2, 'i')
+
+img = cv2.imread('image.jpg', 0)
+imageArray = np.array(img)
+def compress(bottomIndex, increase, imageArray):
+    tempArray = []
+    alt = bottomIndex
+    ust = increase
+    asd = 0
+    for i in range(bottomIndex, imageArray[0].size, increase):
+        for j in range(alt, ust):
+            tempArray.append(imageArray[j][i : i + increase])
+            ImageCompressing(np.array(tempArray), 'i')
+            tempArray.clear()
+            asd = asd + 1
+        alt = alt + increase
+        ust = ust + increase
+    print(asd)
+
+compress(0, 10, imageArray)
