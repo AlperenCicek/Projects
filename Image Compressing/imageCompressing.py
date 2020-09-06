@@ -133,9 +133,12 @@ class ImageCompressing:
             self.huffmanRecursive(self.head)
 
     def printPreorder(self, root):
+        f = open("text.bin", "a+")
         if root:
             print("Node: ", root.data)
             print("Bit: ", root.bit)
+            f.write(f.read() + str(root.bit))
+            f.close()
             if root.left != None:
                 root.left.bit = str(root.bit) + str(root.left.bit)
                 self.printPreorder(root.left)
@@ -152,8 +155,6 @@ class ImageCompressing:
                 print(head.prev.data)
             print("********")
             head = head.next
-
-
 
 class Node:
     def __init__(self, data = None, weight = None):
@@ -177,17 +178,15 @@ img = cv2.imread('image.jpg', 0)
 imageArray = np.array(img)
 def compress(bottomIndex, increase, imageArray):
     tempArray = []
-    alt = bottomIndex
-    ust = increase
     asd = 0
-    for i in range(bottomIndex, imageArray[0].size, increase):
-        for j in range(alt, ust):
+    for i in range(bottomIndex, imageArray[1].size, increase):
+        for j in range(imageArray[0].size):
             tempArray.append(imageArray[j][i : i + increase])
             ImageCompressing(np.array(tempArray), 'i')
             tempArray.clear()
             asd = asd + 1
-        alt = alt + increase
-        ust = ust + increase
     print(asd)
-
+#ImageCompressing(numbers1, 'i')
+print(imageArray[1].size)
 compress(0, 10, imageArray)
+
