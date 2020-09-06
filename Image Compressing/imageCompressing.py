@@ -68,14 +68,18 @@ class ImageCompressing:
 
     def orderingArray2D(self, array):
         for i in range(0, len(array[1]) - 1): 
-            min = i 
+            max = i 
             for j in range(i + 1, len(array[1])): 
-                if array[1][min] > array[1][j]: 
-                    min = j 
+                if array[1][max] < array[1][j]: 
+                    max = j 
                        
-            array[0][i], array[0][min] = array[0][min], array[0][i]
-            array[1][i], array[1][min] = array[1][min], array[1][i]
-        return array
+            array[0][i], array[0][max] = array[0][max], array[0][i]
+            array[1][i], array[1][max] = array[1][max], array[1][i]
+        tempArray = [[], []]
+        for i in range(10, 0, -1):
+            tempArray[0].append(array[0][i])
+            tempArray[1].append(array[1][i])
+        return tempArray
 
     def convertingArraysToNodes(self, array):
         for row0 in array[0]:
@@ -137,14 +141,15 @@ class ImageCompressing:
         if root:
             print("Node: ", root.data)
             print("Bit: ", root.bit)
-            f.write(f.read() + str(root.bit))
-            f.close()
             if root.left != None:
                 root.left.bit = str(root.bit) + str(root.left.bit)
                 self.printPreorder(root.left)
             if root.right != None:
                 root.right.bit = str(root.bit) + str(root.right.bit)
                 self.printPreorder(root.right)
+            if (root.left and root.right) == None:
+                f.write(f.read() + str(root.data) + ":" + str(root.bit))
+                f.close()
 
     def printNodes(self):
         head = self.head
@@ -167,26 +172,8 @@ class Node:
         self.right = None
         self.bit = ""
 
-numbers1 = np.array(([1, 3, 4, 2, 5], [1, 4, 3, 2, 3], [2, 2, 1, 4, 2], [3, 1, 3, 4, 5], [5, 5, 1, 3, 4]), dtype= int)
-numbers2 = np.array(([1,5,4,3,2], [1, 2, 1, 4, 1], [1, 2, 5, 3, 4]))
-
-image = np.ones((10,10))
-for i in range(10):
-    image[i][i] = randint(1, 5)
-
 img = cv2.imread('image.jpg', 0)
 imageArray = np.array(img)
-def compress(bottomIndex, increase, imageArray):
-    tempArray = []
-    asd = 0
-    for i in range(bottomIndex, imageArray[1].size, increase):
-        for j in range(imageArray[0].size):
-            tempArray.append(imageArray[j][i : i + increase])
-            ImageCompressing(np.array(tempArray), 'i')
-            tempArray.clear()
-            asd = asd + 1
-    print(asd)
-#ImageCompressing(numbers1, 'i')
+ImageCompressing(imageArray, 'i')
 print(imageArray[1].size)
-compress(0, 10, imageArray)
 
