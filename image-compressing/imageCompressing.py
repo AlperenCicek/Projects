@@ -1,33 +1,32 @@
 import cv2
 import numpy as np
-from random import seed
-from random import randint
 
 class ImageCompressing:
-    def __init__(self, data, typ):
-        self.data = data
-        self.type = typ
+    def __init__(self, imageName):
+        self.imageName = imageName
+        self.data = None
         self.head = None
+        self.orderedValues = None
+        self.convertedArray = None
         self.process()
 
     def process(self):
+        img = cv2.imread(self.imageName, 0)
+        self.data = np.array(img)
         print("Data: ")
         print(self.data)
-        if self.type == 'c':
-            convertedArray = self.convertingWordToArray(self.data)
-        elif self.type == 'i':
-            convertedArray = self.convertingArrayToOneDimension(self.data)
+        self.convertedArray = self.convertingArrayToOneDimension(self.data)
         print("Converted Values: ")
-        print(convertedArray)
-        sameValues = self.gettingSameValues(convertedArray)
+        print(self.convertedArray)
+        sameValues = self.gettingSameValues(self.convertedArray)
         print("Same Values: ")
         print(sameValues)
-        orderedValues = self.orderingArray2D(sameValues)
+        self.orderedValues = self.orderingArray2D(sameValues)
         print("Ordered Values: ")
-        print(orderedValues)
-        self.convertingArraysToNodes(orderedValues)
+        print(self.orderedValues)
+        self.convertingArraysToNodes(self.orderedValues)
         self.huffmanRecursive(self.head)
-        self.printPreorder(self.head)
+        #self.printPreorder(self.head)
 
     def convertingWordToArray(self, word):
         tempArray = []
@@ -161,6 +160,7 @@ class ImageCompressing:
             print("********")
             head = head.next
 
+
 class Node:
     def __init__(self, data = None, weight = None):
         self.data = data
@@ -171,9 +171,3 @@ class Node:
         self.left = None
         self.right = None
         self.bit = ""
-
-img = cv2.imread('image.jpg', 0)
-imageArray = np.array(img)
-ImageCompressing(imageArray, 'i')
-print(imageArray[1].size)
-
