@@ -1,6 +1,6 @@
 # Sliding Image
 
-Blue line filter adaptation in trend videos. It requires webcam.
+Blue line filter adaptation in trend videos like this; https://www.youtube.com/watch?v=_xmGRwVntW0 
+It requires webcam.
 
-[![Blue Line Filter / Time Warp Scan / TIkTok Compilation](https://img.youtube.com/vi/xmGRwVntW0/0.jpg)](https://www.youtube.com/watch?v=xmGRwVntW0)
-[![image](https://i.hizliresim.com/XWb8f8.png)](https://hizliresim.com/XWb8f8)
+[![image](https://i.hizliresim.com/ihMo4d.png)](https://hizliresim.com/ihMo4d)
